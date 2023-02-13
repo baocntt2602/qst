@@ -11,6 +11,7 @@ import com.example.qstmovieapp.data.repository.MovieRepository
 import com.example.qstmovieapp.ui.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.Comparator
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,5 +38,13 @@ class HomeViewModel @Inject constructor(
                 _movies.postValue(UIState.Error(message = e.message.orEmpty()))
             }
         }
+    }
+
+    fun performSorting(comparator: Comparator<Movie>) {
+        val sortedList =
+            (movies.value as? UIState.Success<List<Movie>>)?.data.orEmpty().toMutableList().apply {
+                sortWith(comparator)
+            }
+        _movies.postValue(UIState.Success(sortedList))
     }
 }

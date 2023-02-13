@@ -28,6 +28,8 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         onSubscribeVM()
     }
 
+    open fun onFragmentFirstCreated() {}
+
     open fun onSubscribeVM() {}
 
     override fun onDestroyView() {

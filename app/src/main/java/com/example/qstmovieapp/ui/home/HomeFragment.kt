@@ -7,7 +7,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.qstmovieapp.data.model.UIState
 import com.example.qstmovieapp.databinding.FragmentHomeBinding
 import com.example.qstmovieapp.ui.base.BaseFragment
+import com.example.qstmovieapp.ui.home.bottom_sheet.SortBTSFragment
 import com.example.qstmovieapp.ui.home.movie_list.MovieAdapter
+import com.example.qstmovieapp.ui.utils.setSafeOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +22,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onViewCreated(view, savedInstanceState)
         viewModel.getMovies()
         setUpView()
+        setUpEvent()
+    }
+
+    private fun setUpEvent() {
+        binding.txtSort.setSafeOnClickListener {
+            SortBTSFragment(
+                onSort = { comparator ->
+                    viewModel.performSorting(comparator)
+                }
+            ).show(childFragmentManager, "")
+        }
     }
 
     private fun setUpView() {
