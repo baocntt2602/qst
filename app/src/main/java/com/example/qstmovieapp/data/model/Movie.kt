@@ -14,5 +14,6 @@ data class Movie(
     val genre: String,
     val releaseDate: String,
     val trailerLink: String,
-    @DrawableRes val poster: Int
-): Parcelable
+    @DrawableRes val poster: Int,
+    var isInWatchlist: Boolean = false
+) : Parcelable

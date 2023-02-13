@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.qstmovieapp.data.local.SharedPrefManager
 import com.example.qstmovieapp.data.model.Movie
 import com.example.qstmovieapp.data.model.UIState
 import com.example.qstmovieapp.data.repository.MovieRepository
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
 
     private val _movies: MutableLiveData<UIState<List<Movie>>> = SingleLiveEvent()
@@ -24,7 +26,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _movies.postValue(UIState.Loading)
             try {
-                _movies.postValue(UIState.Success(movieRepository.getMovies()))
+                val movies = movieRepository.getMovies().apply {
+                    forEach { item ->
+                        item.isInWatchlist =
+                            sharedPrefManager.watchListIds.contains(item.id.toString())
+                    }
+                }
+                _movies.postValue(UIState.Success(movies))
             } catch (e: java.lang.Exception) {
                 _movies.postValue(UIState.Error(message = e.message.orEmpty()))
             }

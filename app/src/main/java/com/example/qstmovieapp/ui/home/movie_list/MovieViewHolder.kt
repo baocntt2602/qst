@@ -3,6 +3,7 @@ package com.example.qstmovieapp.ui.home.movie_list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qstmovieapp.data.model.Movie
 import com.example.qstmovieapp.databinding.ItemMovieBinding
@@ -25,6 +26,7 @@ class MovieViewHolder(
             txtName.text = item.title
             txtInfo.text = item.duration + " - " + item.genre
             imgPoster.setImageDrawable(ContextCompat.getDrawable(binding.root.context, item.poster))
+            txtWatchlist.isVisible = item.isInWatchlist
             root.setOnClickListener {
                 onClicked.invoke(item)
             }

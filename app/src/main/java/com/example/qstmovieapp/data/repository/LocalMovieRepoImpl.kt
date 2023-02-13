@@ -60,7 +60,7 @@ class LocalMovieRepoImpl @Inject constructor() : MovieRepository {
                 genre = "Action, Adventure, Sci-Fi",
                 releaseDate = "1 May 2015",
                 trailerLink = "https://www.youtube.com/watch?v=tmeOjFno6Do",
-                poster = R.drawable.ic_tenet
+                poster = R.drawable.ic_avenger
             ),
         )
     }
