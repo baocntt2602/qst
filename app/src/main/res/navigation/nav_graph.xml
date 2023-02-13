@@ -7,5 +7,23 @@
     <fragment
         android:id="@+id/HomeFragment"
         android:name="com.example.qstmovieapp.ui.home.HomeFragment"
-        android:label="Home" />
+        android:label="Home">
+        <action
+            android:id="@+id/movie_to_detail"
+            app:destination="@+id/MovieDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MovieDetailFragment"
+        android:name="com.example.qstmovieapp.ui.detail.MovieDetailFragment"
+        android:label="MovieDetail">
+        <argument
+            android:name="movie"
+            app:argType="com.example.qstmovieapp.data.model.Movie"
+            app:nullable="false" />
+    </fragment>
 </navigation>
