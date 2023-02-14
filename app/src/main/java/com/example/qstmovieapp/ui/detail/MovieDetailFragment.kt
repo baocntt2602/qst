@@ -3,6 +3,8 @@ package com.example.qstmovieapp.ui.detail
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.text.bold
+import androidx.core.text.buildSpannedString
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -49,6 +51,10 @@ class MovieDetailFragment :
             txtName.text = movie.title
             mivGenre.value = movie.genre
             mivReleaseDate.value = movie.releaseDate
+            txtRating.text = buildSpannedString {
+                bold { append(movie.rating.toString()) }
+                append("/10")
+            }
         }
     }
 

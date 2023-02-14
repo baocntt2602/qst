@@ -11,8 +11,8 @@ import com.example.qstmovieapp.data.repository.MovieRepository
 import com.example.qstmovieapp.ui.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.Comparator
 import javax.inject.Inject
+import kotlin.Comparator
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -23,15 +23,18 @@ class HomeViewModel @Inject constructor(
     private val _movies: MutableLiveData<UIState<List<Movie>>> = SingleLiveEvent()
     val movies: LiveData<UIState<List<Movie>>> = _movies
 
+    private var comparator: Comparator<Movie>? = null
+
     fun getMovies() {
         viewModelScope.launch {
             _movies.postValue(UIState.Loading)
             try {
-                val movies = movieRepository.getMovies().apply {
-                    forEach { item ->
-                        item.isInWatchlist =
-                            sharedPrefManager.watchListIds.contains(item.id.toString())
-                    }
+                var movies = movieRepository.getMovies().onEach { item ->
+                    item.isInWatchlist =
+                        sharedPrefManager.watchListIds.contains(item.id.toString())
+                }
+                comparator?.let {
+                    movies = movies.sortedWith(it)
                 }
                 _movies.postValue(UIState.Success(movies))
             } catch (e: java.lang.Exception) {
@@ -41,6 +44,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun performSorting(comparator: Comparator<Movie>) {
+        this.comparator = comparator
         val sortedList =
             (movies.value as? UIState.Success<List<Movie>>)?.data.orEmpty().toMutableList().apply {
                 sortWith(comparator)
