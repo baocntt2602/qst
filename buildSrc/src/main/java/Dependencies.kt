@@ -13,6 +13,9 @@ object Versions {
 
     const val glideVersion = "4.13.0"
     const val rvVersion = "1.2.0-alpha04"
+
+    const val junitVersion = "1.1.3"
+    const val mockkVersion = "1.12.0"
 }
 
 object Libraries {
@@ -35,6 +38,11 @@ object Libraries {
     const val glideAnnotationProcessor =
         "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
     const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.rvVersion}"
+
+    const val junit = "androidx.test.ext:junit:${Versions.junitVersion}"
+    const val junitKtx = "androidx.test.ext:junit-ktx:${Versions.junitVersion}"
+    const val mockk = "io.mockk:mockk:${Versions.mockkVersion}"
+    const val mockkAndroid = "io.mockk:mockk-android:${Versions.mockkVersion}"
 }
 
 object ClassPaths {

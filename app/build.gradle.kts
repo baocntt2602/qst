@@ -54,6 +54,11 @@ dependencies {
     implementation(Libraries.navUIKtx)
 
     implementation(Libraries.gson)
+
+    implementation(Libraries.junit)
+    implementation(Libraries.junitKtx)
+    implementation(Libraries.mockk)
+    implementation(Libraries.mockkAndroid)
 }
 
 // Allow references to generated code
